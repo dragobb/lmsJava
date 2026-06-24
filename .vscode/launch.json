@@ -5,6 +5,13 @@
         "type": "java",
         "name": "LibManagement",
         "request": "launch",
+        "mainClass": "abservices.libmanagement.LibManagement",
+        "projectName": ""
+    },
+    {
+        "type": "java",
+        "name": "LibManagement",
+        "request": "launch",
         "mainClass": "bonifacio_bscs1a.libmanagement.LibManagement",
         "projectName": ""
     },

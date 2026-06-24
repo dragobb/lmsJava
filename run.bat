@@ -18,6 +18,6 @@ if exist "%JDT_PATH%" (
   set "CP=%CP%;%JDT_PATH%"
 )
 
-"%JAVACMD%" -cp "%CP%" bonifacio_bscs1a.libmanagement.LibManagement
+"%JAVACMD%" -cp "%CP%" abservices.libmanagement.LibManagement
 ENDLOCAL
 pause

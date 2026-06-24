@@ -132,18 +132,36 @@ Password: admin123
 
 ### Option 1: Quick Launcher (⭐ Recommended)
 
-#### Windows Command Prompt / PowerShell:
-```powershell
-# From project root directory
-.\run.ps1
-```
+The project includes two launcher scripts that automatically handle classpath setup.
 
-#### Or double-click:
-```
+#### Method A: PowerShell Script
+1. Open PowerShell
+2. Navigate to the project root:
+   ```powershell
+   cd C:\Users\ariel\Documents\Java Projects\lmsJava
+   ```
+3. Run the launcher:
+   ```powershell
+   .\run.ps1
+   ```
+
+#### Method B: Batch File (Easiest)
+Simply **double-click** `run.bat` in File Explorer, or run from Command Prompt:
+```cmd
 run.bat
 ```
 
-This automatically sets the classpath and launches the application.
+#### Method C: PowerShell Terminal (Alternative)
+If you get execution policy errors in PowerShell, try:
+```powershell
+powershell -ExecutionPolicy Bypass -File run.ps1
+```
+
+**What the launchers do:**
+- ✅ Automatically detects Java installation
+- ✅ Sets classpath to include `libs\*` and `target\classes`
+- ✅ Launches the application with the correct package `abservices.libmanagement.LibManagement`
+- ✅ Includes VS Code JDT compiled classes if available
 
 ### Option 2: Maven Build & Run
 

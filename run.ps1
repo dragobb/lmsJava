@@ -10,5 +10,5 @@ $classes = Join-Path $projectRoot 'target\classes'
 $jdt = 'C:\Users\ariel\AppData\Roaming\Code\User\workspaceStorage\e0454cc7e17a631588d2e9f6bfca623d\redhat.java\jdt_ws\jdt.ls-java-project\bin'
 $cp = "$libs;$classes;."
 if (Test-Path $jdt) { $cp = "$cp;$jdt" }
-& $javaPath -cp $cp bonifacio_bscs1a.libmanagement.LibManagement
+& $javaPath -cp $cp abservices.libmanagement.LibManagement
 Read-Host -Prompt "Press Enter to exit"
