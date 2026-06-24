@@ -3,6 +3,20 @@
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
 Set-Location $projectRoot
 
+# Check for Maven and compile the project
+Write-Host "[INFO] Checking for Maven to compile the project..."
+if (Get-Command mvn -ErrorAction SilentlyContinue) {
+    Write-Host "[INFO] Maven found. Compiling project..."
+    mvn clean compile
+    if ($LASTEXITCODE -ne 0) {
+        Write-Error "[ERROR] Maven compilation failed. Please check the errors above and try again."
+        Read-Host -Prompt "Press Enter to exit"
+        exit
+    }
+} else {
+    Write-Warning "[WARN] Maven (mvn) not found in PATH. Assuming project is already compiled."
+}
+
 # Determine the java executable path
 if ($env:JAVA_HOME) {
     $javaPath = Join-Path $env:JAVA_HOME 'bin\java.exe'

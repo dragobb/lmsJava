@@ -249,7 +249,7 @@ public class LibManagement extends JFrame {
         int confirm = JOptionPane.showConfirmDialog(sidebar, "Are you sure you want to log out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             SwingUtilities.getWindowAncestor(sidebar).dispose();
-            LogIn();
+            returnToLoginScreen();
         }
     });
 
@@ -455,7 +455,7 @@ private JButton createModernSidebarButton(String text, String iconPath, String t
     JComboBox<String> filterBox = createFilterBox();
     JPanel searchPanel = createSearchPanel(searchField, filterBox);
 
-    JPanel cardContainer = new JPanel(new GridLayout(0, 3, 15, 15));
+    JPanel cardContainer = new JPanel(new WrapLayout(WrapLayout.LEFT, 15, 15));
     cardContainer.setOpaque(false);
     cardContainer.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -550,7 +550,6 @@ private JPanel createSearchPanel(JTextField searchField, JComboBox<String> filte
 
 private void loadModernBookCards(JPanel container) {
     container.removeAll(); 
-    container.setLayout(new GridLayout(0, 5, 15, 15)); 
     container.setOpaque(false);
     container.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));  
 
@@ -1545,8 +1544,7 @@ if (available) {
         ResultSet rs = stmt.executeQuery();
         
         // Create a panel to hold borrower cards in a grid layout
-        JPanel cardsPanel = new JPanel();
-        cardsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 15));
+        JPanel cardsPanel = new JPanel(new WrapLayout(WrapLayout.LEFT, 15, 15));
         cardsPanel.setOpaque(false);
         
         while (rs.next()) {
@@ -1719,13 +1717,8 @@ private void showBorrowedBooksForMember(String memberName, JPanel container) {
         ResultSet rs = stmt.executeQuery();
         
         // Books panel - with better layout control
-JPanel booksPanel = new JPanel();
-booksPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-booksPanel.setOpaque(false);
-
-// Force the panel to stick to the top by setting alignment
-booksPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-booksPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+        JPanel booksPanel = new JPanel(new WrapLayout(WrapLayout.LEFT, 15, 15));
+        booksPanel.setOpaque(false);
 
 boolean hasBooks = false;
 while (rs.next()) {
@@ -1747,12 +1740,7 @@ if (!hasBooks) {
     return;
 }
 
-// Wrap the books panel in another panel to control positioning
-JPanel wrapperPanel = new JPanel(new BorderLayout());
-wrapperPanel.setOpaque(false);
-wrapperPanel.add(booksPanel, BorderLayout.NORTH); // Force to top
-
-container.add(wrapperPanel);
+container.add(booksPanel);
         
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error loading books for member: " + e.getMessage());
@@ -1805,7 +1793,7 @@ private JButton createModernBackButton() {
         SwingUtilities.invokeLater(LogIn::new);
     }
 
-    private void LogIn() {
+    private void returnToLoginScreen() {
         SwingUtilities.invokeLater(LogIn::new);
     }
 }

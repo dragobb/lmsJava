@@ -7,8 +7,8 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <exec.mainClass>LibManagement</exec.mainClass>
     </properties>
     <dependencies>
@@ -41,10 +41,4 @@
             </plugin>
         </plugins>
     </build>
-    <classpath>
-  <classpathentry kind="src" path="src/main/java"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="lib" path="libs/mysql-connector-j-8.0.32.jar"/>
-  <classpathentry kind="output" path="target/classes"/>
-</classpath>
 </project>

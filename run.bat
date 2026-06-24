@@ -12,14 +12,13 @@ if defined JAVA_HOME (
   set "JAVACMD=java"
 )
 
-REM Default classpath entries: all jars in libs, target\classes, and current dir
+REM Classpath includes all JARs in libs, the compiled classes, and the current directory (.).
 set "CP=%PROJECT_ROOT%libs\*;%PROJECT_ROOT%target\classes;."
 
-REM Optional: include VS Code jdt compiled classes path if present — update if necessary
-REM This is a more generic way to find the VSCode JDT path, but it's complex.
-REM For now, we rely on `target/classes` which is the standard.
-
 echo Running with classpath: %CP%
+REM The entire classpath string is wrapped in quotes to handle spaces in paths.
 "%JAVACMD%" -cp "%CP%" abservices.libmanagement.LibManagement
+
+:end
 ENDLOCAL
 pause
