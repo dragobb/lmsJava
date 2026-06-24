@@ -177,42 +177,49 @@ powershell -ExecutionPolicy Bypass -File run.ps1
    ```
 
 3. **Run the compiled JAR**:
-   ```powershell
-   java -cp "target/classes;libs/*" abservices.libmanagement.LibManagement
-   ```
+   This command runs the application using the compiled classes and libraries.
+    ```powershell
+    # The classpath separator is ; on Windows and : on Linux/Mac
+    java -cp "target/classes;libs/*" abservices.libmanagement.LibManagement
+    ```
 
 ### Option 3: Create a Standalone JAR (Advanced)
 
-Add Maven Shade plugin to `pom.xml` for a fat JAR:
-```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-shade-plugin</artifactId>
-    <version>3.2.4</version>
-    <executions>
-        <execution>
-            <phase>package</phase>
-            <goals>
-                <goal>shade</goal>
-            </goals>
-            <configuration>
-                <transformers>
-                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                        <mainClass>abservices.libmanagement.LibManagement</mainClass>
-                    </transformer>
-                </transformers>
-                <finalName>LibManagement-1.0-SNAPSHOT-shaded</finalName>
-            </configuration>
-        </execution>
-    </executions>
-</plugin>
-```
+To create a single, all-in-one executable JAR, add the `maven-shade-plugin` to your `pom.xml` inside the `<plugins>` section.
 
-Then run:
-```powershell
-mvn clean package
-java -jar target/LibManagement-1.0-SNAPSHOT-shaded.jar
-```
+1.  **Add the plugin to `pom.xml`**:
+    ```xml
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>abservices.libmanagement.LibManagement</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    ```
+
+2.  **Build the "fat" JAR**:
+    ```powershell
+    mvn clean package
+    ```
+
+3.  **Run the standalone JAR**:
+    ```powershell
+    java -jar target/LibManagement-1.0-SNAPSHOT-shaded.jar
+    ```
 
 ---
 
@@ -245,16 +252,7 @@ java -jar target/LibManagement-1.0-SNAPSHOT-shaded.jar
 
 ---
 
-## 📝 Notes
-
-- The MySQL driver jar is bundled locally in `libs/` for portability
-- The application uses dynamic class loading to support multiple driver locations
-- All passwords are securely hashed using SHA-256
-- The launcher expects `libs\*` and `target\classes` in the classpath
-
----
-
-## 👤 Author
+##  Author
 
 **Developed by**: ariel
 
@@ -263,69 +261,3 @@ java -jar target/LibManagement-1.0-SNAPSHOT-shaded.jar
 ## 📄 License
 
 This project is provided as-is for educational purposes.
-```powershell
-run.bat
-```
-
-### Option 2: Run from VS Code
-
-1. Install the Java extension pack.
-2. Open the project folder.
-3. Add `libs/mysql-connector-j-8.0.32.jar` to Referenced Libraries if needed.
-4. Run the `.vscode/launch.json` configuration: `Launch LibManagement (LogIn)`.
-
-### Option 3: Run directly with `java`
-
-From project root:
-```powershell
-& "C:\Program Files\Java\jre-1.8\bin\java.exe" -cp "libs\mysql-connector-j-8.0.32.jar;target\classes;." abservices.libmanagement.LogIn
-```
-
-### Option 4: Run with Maven
-
-If you have a JDK installed:
-```powershell
-mvn clean compile exec:java -Dexec.mainClass="abservices.libmanagement.LogIn"
-```
-
-## VS Code / Classpath Notes
-
-If VS Code does not detect the MySQL driver automatically:
-- Add the jar from `libs/mysql-connector-j-8.0.32.jar` to Referenced Libraries.
-- Refresh the project and restart the Java language server.
-- The app also supports `LIBS_DIR` for IDE launch configs.
-
-## Dependencies
-
-- `com.mysql:mysql-connector-j:8.0.32`
-- `com.formdev:flatlaf:3.2` (UI styling)
-- `com.aeontronix.enhanced-mule:enhanced-mule-tools-cli:1.3.0-beta23` (project dependency present in POM)
-
-## Known files to check
-
-- `README-FIX.md` — extra launch instructions and troubleshooting notes.
-- `.vscode/launch.json` — VS Code debug/run launch settings.
-- `library_db.sql` — database schema to import into MySQL.
-
-## Troubleshooting
-
-### MySQL driver error
-- Ensure `libs/mysql-connector-j-8.0.32.jar` exists.
-- Ensure the jar is registered in your IDE or included in runtime classpath.
-- Use the `run.bat` / `run.ps1` launchers to include the jar automatically.
-
-### Login fails
-- Confirm the database is created and `users` table exists.
-- Confirm the database credentials in code match your MySQL setup.
-- If using a new user, register first through the app or insert into the `users` table.
-
-### Build issues
-- If Maven fails with `No compiler is provided in this environment`, install a JDK and run from that JDK.
-- If the project is compiled with a different Java version than the runtime, align the JDK/JRE versions.
-
-## Contact
-
-For fixes or improvements:
-- Edit the source in `src/main/java/abservices/libmanagement/`
-- Keep assets in `images/` and external jars in `libs/`
-- Use the `library_db.sql` file to manage the database schema

@@ -1,14 +1,22 @@
 # PowerShell launcher for LibManagement
+# Set the current location to the script's directory to ensure relative paths work.
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Definition
 Set-Location $projectRoot
 
-#$javaPath = "$env:JAVA_HOME\bin\java.exe"
-$javaPath = "C:\Program Files\Java\jre-1.8\bin\java.exe"
+# Determine the java executable path
+if ($env:JAVA_HOME) {
+    $javaPath = Join-Path $env:JAVA_HOME 'bin\java.exe'
+} else {
+    Write-Warning "JAVA_HOME environment variable not set. Assuming 'java' is in the system PATH."
+    $javaPath = "java"
+}
+
+# Define classpath components relative to the project root
 $libs = Join-Path $projectRoot 'libs\*'
 $classes = Join-Path $projectRoot 'target\classes'
-# Optional: VS Code jdt compiled path (update if different)
-$jdt = 'C:\Users\ariel\AppData\Roaming\Code\User\workspaceStorage\e0454cc7e17a631588d2e9f6bfca623d\redhat.java\jdt_ws\jdt.ls-java-project\bin'
+
+# Construct the classpath string (uses semicolon for Windows)
 $cp = "$libs;$classes;."
-if (Test-Path $jdt) { $cp = "$cp;$jdt" }
+
 & $javaPath -cp $cp abservices.libmanagement.LibManagement
 Read-Host -Prompt "Press Enter to exit"
