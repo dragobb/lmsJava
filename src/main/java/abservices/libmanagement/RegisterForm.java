@@ -1,5 +1,5 @@
 
-package bonifacio_bscs1a.libmanagement;
+package abservices.libmanagement;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

@@ -1,5 +1,5 @@
 
-package bonifacio_bscs1a.libmanagement;
+package abservices.libmanagement;
 
 import java.awt.Color;
 import java.awt.Component;

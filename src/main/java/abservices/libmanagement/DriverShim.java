@@ -1,4 +1,4 @@
-package bonifacio_bscs1a.libmanagement;
+package abservices.libmanagement;
 
 import java.sql.*;
 import java.util.Properties;

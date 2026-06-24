@@ -1,60 +1,94 @@
-# Library Management System
+# 📚 Library Management System
 
-A Java Swing desktop application for managing books, borrowers, and user login for a school or campus library.
+> A professional Java Swing desktop application for managing books, borrowers, and user authentication in a school or campus library.
 
-## Project Overview
+---
 
-This project is a Library Management System built with:
-- Java Swing for the user interface
-- MySQL for the backend database
-- JDBC for database connectivity
-- Local driver loading support from `libs/mysql-connector-j-8.0.32.jar`
+## 🎯 Project Overview
 
-The main application classes are:
-- `bonifacio_bscs1a.libmanagement.LogIn` — login screen and database authentication
-- `bonifacio_bscs1a.libmanagement.RegisterForm` — user registration form
-- `bonifacio_bscs1a.libmanagement.LibManagement` — main library dashboard
-- `bonifacio_bscs1a.libmanagement.DriverLoader` — dynamic MySQL driver loader
-- `bonifacio_bscs1a.libmanagement.DriverShim` — wrapper to register the JDBC driver
+**Library Management System (LMS)** is a feature-rich desktop application designed to streamline library operations with an intuitive graphical interface and robust database backend.
 
-## Key Features
+### Tech Stack
+- **Frontend**: Java Swing
+- **Backend**: MySQL Database
+- **Build Tool**: Maven
+- **Java Version**: 21
+- **Database Driver**: MySQL Connector/J 8.0.32
 
-- Secure login with SHA-256 hashed passwords
-- User registration screen
-- Add new books with images
-- View and refresh book list
-- Search and filter books by title, author, or ISBN
-- Borrower list view and borrowed book details
-- Mark books borrowed/returned in the database
-- Custom UI styling with image backgrounds, icons, and modern buttons
+### Core Modules
+| Module | Purpose |
+|--------|---------|
+| `LogIn.java` | Secure login with SHA-256 password hashing |
+| `RegisterForm.java` | User registration interface |
+| `LibManagement.java` | Main dashboard & book management |
+| `DriverLoader.java` | Dynamic MySQL driver loader |
+| `DriverShim.java` | JDBC driver wrapper & registration |
 
-## Project Structure
+---
 
-- `pom.xml` — Maven project file and dependency management
-- `src/main/java/bonifacio_bscs1a/libmanagement/` — main source code
-- `libs/` — external libraries like MySQL Connector/J
-- `library_db.sql` — database schema for MySQL
-- `.vscode/launch.json` — VS Code launch configuration for the project
-- `images/` — UI image assets used by the application
+## ✨ Key Features
 
-## Requirements
+- ✅ **Secure Authentication** — SHA-256 encrypted login system
+- ✅ **User Registration** — Easy user account creation
+- ✅ **Book Management** — Add, view, and manage books with cover images
+- ✅ **Advanced Search** — Filter books by title, author, or ISBN
+- ✅ **Borrower Tracking** — Complete borrower database with borrow/return history
+- ✅ **Dynamic UI** — Custom styling with backgrounds, icons, and modern components
+- ✅ **Database Integration** — Persistent storage with MySQL
 
-- Java 8 or newer runtime
-- MySQL server (or XAMPP MySQL)
-- MySQL Connector/J driver jar in `libs/mysql-connector-j-8.0.32.jar`
-- A working database named `library_db`
+---
 
-> Note: The `pom.xml` currently targets Java 21, so a JDK is recommended for Maven builds. For running the app only, a Java runtime is enough if the code is compiled successfully.
+## 📂 Project Structure
 
-## Database Setup
+```
+lmsJava/
+├── src/main/java/abservices/libmanagement/
+│   ├── LogIn.java
+│   ├── RegisterForm.java
+│   ├── LibManagement.java
+│   ├── DriverLoader.java
+│   ├── DriverShim.java
+│   ├── borrowersTable.java
+│   ├── WrapLayout.java
+│   ├── DropShadowBorder.java
+│   └── *.form (NetBeans GUI files)
+├── libs/
+│   └── mysql-connector-j-8.0.32.jar
+├── images/
+│   └── [UI assets and icons]
+├── pom.xml (Maven configuration)
+├── library_db.sql (Database schema)
+├── run.bat (Windows batch launcher)
+├── run.ps1 (PowerShell launcher)
+└── README.md (This file)
+```
 
-Use `library_db.sql` to create the required database and tables.
+---
 
-Example:
+## 🔧 Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| **Java** | JDK 8 | JDK 21 (for building) |
+| **MySQL** | 5.7 | 8.0+ |
+| **MySQL Driver** | 8.0.32 | Latest |
+| **OS** | Windows/Linux/Mac | Windows 10+ |
+
+> **Note**: A JDK is required for Maven builds. For running compiled code, Java Runtime Environment (JRE) is sufficient.
+
+---
+
+## 🗄️ Database Setup
+
+### Option A: Import SQL Script
+Run the provided `library_db.sql` file in your MySQL client:
+
 ```sql
+-- Create database
 CREATE DATABASE IF NOT EXISTS library_db;
 USE library_db;
 
+-- Users table
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL UNIQUE,
@@ -62,6 +96,7 @@ CREATE TABLE IF NOT EXISTS users (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Books table
 CREATE TABLE IF NOT EXISTS books (
   title VARCHAR(255) NOT NULL PRIMARY KEY,
   author VARCHAR(255) NOT NULL,
@@ -71,6 +106,7 @@ CREATE TABLE IF NOT EXISTS books (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Borrowers table
 CREATE TABLE IF NOT EXISTS borrowers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   member_name VARCHAR(255) NOT NULL,
@@ -83,21 +119,132 @@ CREATE TABLE IF NOT EXISTS borrowers (
 );
 ```
 
-A sample account can be created manually after import. Example:
-- Username: `admin`
-- Password: `admin123`
-
-## Running the Application
-
-### Option 1: Use the included launcher
-
-From Windows PowerShell in project root:
-```powershell
-.
-un.ps1
+### Option B: Default Test Account
+After database import, you can use:
+```
+Username: admin
+Password: admin123
 ```
 
-Or double-click:
+---
+
+## 🚀 Running the Application
+
+### Option 1: Quick Launcher (⭐ Recommended)
+
+#### Windows Command Prompt / PowerShell:
+```powershell
+# From project root directory
+.\run.ps1
+```
+
+#### Or double-click:
+```
+run.bat
+```
+
+This automatically sets the classpath and launches the application.
+
+### Option 2: Maven Build & Run
+
+1. **Verify JDK installation**:
+   ```powershell
+   java -version
+   javac -version
+   ```
+
+2. **Build with Maven**:
+   ```powershell
+   mvn clean package
+   ```
+
+3. **Run the compiled JAR**:
+   ```powershell
+   java -cp "target/classes;libs/*" abservices.libmanagement.LibManagement
+   ```
+
+### Option 3: Create a Standalone JAR (Advanced)
+
+Add Maven Shade plugin to `pom.xml` for a fat JAR:
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.2.4</version>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+            <configuration>
+                <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>abservices.libmanagement.LibManagement</mainClass>
+                    </transformer>
+                </transformers>
+                <finalName>LibManagement-1.0-SNAPSHOT-shaded</finalName>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+```
+
+Then run:
+```powershell
+mvn clean package
+java -jar target/LibManagement-1.0-SNAPSHOT-shaded.jar
+```
+
+---
+
+## 🛠️ Setup Instructions for VS Code
+
+1. **Add Referenced Libraries**:
+   - Right-click `Referenced Libraries` in the Java Projects view
+   - Select `Add Jar` → `libs\mysql-connector-j-8.0.32.jar`
+
+2. **Compile**:
+   - VS Code Java Extension will compile automatically on save
+   - Or run: `mvn clean compile`
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "Driver not found" error | Ensure `mysql-connector-j-8.0.32.jar` is in `libs/` folder |
+| Cannot connect to database | Verify MySQL is running and `library_db` exists |
+| Classpath errors | Run from project root and use provided launchers |
+| Java version mismatch | Update Java to version 21 or check `pom.xml` compiler settings |
+| Application won't start | Check console output for detailed error messages |
+
+### Getting Help
+- Run the application from a console window to capture full error messages
+- Verify all dependencies are properly installed
+- Check database connection credentials in the code
+
+---
+
+## 📝 Notes
+
+- The MySQL driver jar is bundled locally in `libs/` for portability
+- The application uses dynamic class loading to support multiple driver locations
+- All passwords are securely hashed using SHA-256
+- The launcher expects `libs\*` and `target\classes` in the classpath
+
+---
+
+## 👤 Author
+
+**Developed by**: ariel
+
+---
+
+## 📄 License
+
+This project is provided as-is for educational purposes.
 ```powershell
 run.bat
 ```
@@ -113,14 +260,14 @@ run.bat
 
 From project root:
 ```powershell
-& "C:\Program Files\Java\jre-1.8\bin\java.exe" -cp "libs\mysql-connector-j-8.0.32.jar;target\classes;." bonifacio_bscs1a.libmanagement.LogIn
+& "C:\Program Files\Java\jre-1.8\bin\java.exe" -cp "libs\mysql-connector-j-8.0.32.jar;target\classes;." abservices.libmanagement.LogIn
 ```
 
 ### Option 4: Run with Maven
 
 If you have a JDK installed:
 ```powershell
-mvn clean compile exec:java -Dexec.mainClass="bonifacio_bscs1a.libmanagement.LogIn"
+mvn clean compile exec:java -Dexec.mainClass="abservices.libmanagement.LogIn"
 ```
 
 ## VS Code / Classpath Notes
@@ -161,6 +308,6 @@ If VS Code does not detect the MySQL driver automatically:
 ## Contact
 
 For fixes or improvements:
-- Edit the source in `src/main/java/bonifacio_bscs1a/libmanagement/`
+- Edit the source in `src/main/java/abservices/libmanagement/`
 - Keep assets in `images/` and external jars in `libs/`
 - Use the `library_db.sql` file to manage the database schema

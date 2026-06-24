@@ -3,7 +3,7 @@
  *
  * @author ariel
  */
-package bonifacio_bscs1a.libmanagement;
+package abservices.libmanagement;
 
 class borrowersTable {
 
